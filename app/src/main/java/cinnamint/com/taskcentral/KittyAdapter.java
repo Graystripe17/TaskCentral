@@ -45,28 +45,39 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.abc_popup_exit);
+                Animation mFadeAnim = AnimationUtils.loadAnimation(getContext(), R.anim.abc_shrink_fade_out_from_bottom);
+                mFadeAnim.setDuration(mShortAnimationDuration);
 
                 View parent = (View) buttonView.getParent();
-                parent.setAlpha(1f);
-                parent.setVisibility(View.VISIBLE);
-                parent.animate()
-                        .alpha(0f)
-                        .setDuration(mShortAnimationDuration)
-                        .setListener(null);
+//                parent.setAlpha(1f);
+//                parent.setVisibility(View.VISIBLE);
+//                parent.animate()
+//                        .alpha(0f)
+//                        .setDuration(mShortAnimationDuration)
+//                        .setListener(null);
 
-                parent.startAnimation(hyperspaceJumpAnimation);
+                parent.startAnimation(mFadeAnim);
 
-//                // YOU MUST UPDATE THE DATABASE, removed by Title
-//                DatabaseHandler db = new DatabaseHandler(getContext());
-//                db.remove(TaskCentral.tasks.get(pos).getTitle());
-//                db.close();
-//                TaskCentral.tasks.remove(pos);
-//                TaskCentral.mAdapter.notifyDataSetChanged();
+                // Updates database after a the animation completes
+                parent.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // YOU MUST UPDATE THE DATABASE, removed by Title
+                        DatabaseHandler db = new DatabaseHandler(getContext());
+                        db.remove(TaskCentral.tasks.get(pos).getTitle());
+                        db.close();
+                        TaskCentral.tasks.remove(pos);
+                        TaskCentral.mAdapter.notifyDataSetChanged();
+                    }
+                }, mShortAnimationDuration);
+
+
             }
         });
 
         this.notifyDataSetChanged();
+
+
 
         return customView;
     }
