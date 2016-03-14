@@ -22,6 +22,7 @@ public class AddTaskActivity extends Activity {
         EditText desc = (EditText) findViewById(R.id.DescriptionText);
         Tasks newTask = new Tasks(title.getText().toString(), desc.getText().toString());
 
+        //TODO: Check for null
         TaskCentral.tasks.add(newTask);
         TaskCentral.mAdapter.notifyDataSetChanged();
 

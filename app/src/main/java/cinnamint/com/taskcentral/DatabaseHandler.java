@@ -78,4 +78,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void remove(String t) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_TASKS + " WHERE Title = " + "'" + t + "'");
+        db.close();
+    }
+
 }

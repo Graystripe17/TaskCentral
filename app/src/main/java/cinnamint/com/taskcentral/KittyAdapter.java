@@ -1,9 +1,13 @@
 package cinnamint.com.taskcentral;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -13,6 +17,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class KittyAdapter extends ArrayAdapter<Tasks> {
+
+    private int mShortAnimationDuration = 500;
 
     public KittyAdapter(Context context, ArrayList<Tasks> items) {
         super(context, R.layout.custom_task_layout, items);
@@ -38,8 +44,25 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
         done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            TaskCentral.tasks.remove(pos);
-            TaskCentral.mAdapter.notifyDataSetChanged();
+
+                Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.abc_popup_exit);
+
+                View parent = (View) buttonView.getParent();
+                parent.setAlpha(1f);
+                parent.setVisibility(View.VISIBLE);
+                parent.animate()
+                        .alpha(0f)
+                        .setDuration(mShortAnimationDuration)
+                        .setListener(null);
+
+                parent.startAnimation(hyperspaceJumpAnimation);
+
+//                // YOU MUST UPDATE THE DATABASE, removed by Title
+//                DatabaseHandler db = new DatabaseHandler(getContext());
+//                db.remove(TaskCentral.tasks.get(pos).getTitle());
+//                db.close();
+//                TaskCentral.tasks.remove(pos);
+//                TaskCentral.mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -47,6 +70,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
 
         return customView;
     }
+
 
 
 }

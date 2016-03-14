@@ -81,9 +81,10 @@ public class TaskCentral extends Activity {
 
 
         taskCentral = (ListView)findViewById(R.id.Central);
-        if (mAdapter == null) {
-            mAdapter = new KittyAdapter(this, tasks);
-        }
+        //if (mAdapter == null) {
+        // MUST BE CONSTANTLY RESET
+        mAdapter = new KittyAdapter(this, tasks);
+        //}
         taskCentral.setAdapter(mAdapter);
 
         mAdapter.notifyDataSetChanged();
@@ -209,6 +210,14 @@ public class TaskCentral extends Activity {
     }
 
     public void delete (View v) {
+        v.setAlpha(1f);
+        v.setVisibility(View.VISIBLE);
+        v.animate()
+                .alpha(0f)
+                .setDuration(500)
+                .setListener(null);
+
+
         DatabaseHandler db = new DatabaseHandler(context);
         db.clear();
         tasks.clear();
