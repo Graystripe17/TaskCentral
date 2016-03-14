@@ -44,33 +44,39 @@ public class TaskCentral extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_central);
         context = this;
-        sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        editor = sharedPref.edit();
-        int k = sharedPref.getInt("Read", 7);
-        Toast.makeText(context, "K: " + k, Toast.LENGTH_LONG).show();
+//        sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+//        editor = sharedPref.edit();
+//        int k = sharedPref.getInt("Read", 7);
+//        Toast.makeText(context, "K: " + k, Toast.LENGTH_LONG).show();
+
+
+        DatabaseHandler db = new DatabaseHandler(this);
+//        for(int i = 0; i < tasks.size(); i++) {
+//            db.addTask(tasks.get(i));
+//        }
+        tasks = db.getAllTasks();
 
         // Are we coming back from AddTaskActivity
         if(getIntent() != null) {
-            reload_size = getIntent().getIntExtra("SizeFromAddTask", -1);
-            if(reload_size != -1) {
+            // reload_size = getIntent().getIntExtra("SizeFromAddTask", -1);
+            // if(reload_size != -1) {
                 // We just came back from AddTaskActivity
-            }
+            // }
         }
         // Are we coming back from closing the app
         else if(sharedPref != null) {
             // If there is no previous preference, then the current task size will work
-            reload_size = sharedPref.getInt("SIZE", tasks.size());
-
+            // reload_size = sharedPref.getInt("SIZE", tasks.size());
         }
         // Start constructing tasks
-        tasks.clear();
-        for(int i = 0; i < reload_size; i++) {
-            Tasks builder = new Tasks();
-            builder.setTitle(sharedPref.getString("Title_" + i, "Cant find " + i));
-            builder.setDescription(sharedPref.getString("Description_" + i, "Cant find " + i));
-            builder.setbColor(sharedPref.getInt("Color_" + i, 10));
-            tasks.add(builder);
-        }
+//        tasks.clear();
+//        for(int i = 0; i < reload_size; i++) {
+//            Tasks builder = new Tasks();
+//            builder.setTitle(sharedPref.getString("Title_" + i, "Cant find " + i));
+//            builder.setDescription(sharedPref.getString("Description_" + i, "Cant find " + i));
+//            builder.setbColor(sharedPref.getInt("Color_" + i, 10));
+//            tasks.add(builder);
+//        }
         // End constructing tasks
 
 
@@ -163,46 +169,48 @@ public class TaskCentral extends Activity {
 
     @Override
     protected void onPause() {
-        editor.putInt("Read", 3);
-        editor.commit();
-        if(sharedPref != null) {
-            // Get rid of Bloating
-            // editor.clear();
-
-            editor.putInt("SIZE", tasks.size());
-            for(int i = 0; i < tasks.size(); i++) {
-                Tasks target = tasks.get(i);
-                editor.putString("Title_"+i, target.getTitle());
-                editor.putString("Description_" + i, target.getDescription());
-                editor.putInt("Color_" + i, target.getbColor());
-                Toast.makeText(context, "Title: "+target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
-            }
-        }
+//        editor.putInt("Read", 3);
+//        editor.commit();
+//        if(sharedPref != null) {
+//            // Get rid of Bloating
+//            // editor.clear();
+//
+//            editor.putInt("SIZE", tasks.size());
+//            for(int i = 0; i < tasks.size(); i++) {
+//                Tasks target = tasks.get(i);
+//                editor.putString("Title_"+i, target.getTitle());
+//                editor.putString("Description_" + i, target.getDescription());
+//                editor.putInt("Color_" + i, target.getbColor());
+//                Toast.makeText(context, "Title: "+target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
+//            }
+//        }
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        editor.putInt("Read", 5);
-        editor.commit();
-        if(sharedPref != null) {
-            // Get rid of Bloating
-            //editor.clear();
-
-            editor.putInt("SIZE", tasks.size());
-            for(int i = 0; i < tasks.size(); i++) {
-                Tasks target = tasks.get(i);
-                editor.putString("Title_"+i, target.getTitle());
-                editor.putString("Description_" + i, target.getDescription());
-                editor.putInt("Color_" + i, target.getbColor());
-                Toast.makeText(context, "destroy; Title: " + target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
-            }
-            editor.commit();
-        }
+//        editor.putInt("Read", 5);
+//        editor.commit();
+//        if(sharedPref != null) {
+//            // Get rid of Bloating
+//            //editor.clear();
+//
+//            editor.putInt("SIZE", tasks.size());
+//            for(int i = 0; i < tasks.size(); i++) {
+//                Tasks target = tasks.get(i);
+//                editor.putString("Title_"+i, target.getTitle());
+//                editor.putString("Description_" + i, target.getDescription());
+//                editor.putInt("Color_" + i, target.getbColor());
+//                Toast.makeText(context, "destroy; Title: " + target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
+//            }
+//            editor.commit();
+//        }
         super.onDestroy();
     }
 
     public void delete (View v) {
+        DatabaseHandler db = new DatabaseHandler(context);
+        db.clear();
         tasks.clear();
         mAdapter.notifyDataSetChanged();
     }
@@ -210,7 +218,7 @@ public class TaskCentral extends Activity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        editor.putInt("SIZE", tasks.size());
-        editor.commit();
+//        editor.putInt("SIZE", tasks.size());
+//        editor.commit();
     }
 }

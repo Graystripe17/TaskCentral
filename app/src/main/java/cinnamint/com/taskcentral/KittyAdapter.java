@@ -34,16 +34,11 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
         myDescText.setText(singleTask.getDescription());
         customView.setBackgroundColor(singleTask.getbColor());
 
+
         done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             TaskCentral.tasks.remove(pos);
-
             TaskCentral.mAdapter.notifyDataSetChanged();
             }
         });

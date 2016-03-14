@@ -3,8 +3,12 @@ package cinnamint.com.taskcentral;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -43,7 +47,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DESCRIPTION, task.getDescription());
         values.put(KEY_COLOR, task.getbColor());
 
-        db.insert(TABLE_TASKS, null, values);
+        if (db.insert(TABLE_TASKS, null, values) == -1) {
+            Log.d("WRONG", "BAD");
+        };
+        db.close();
+    }
+
+    public ArrayList<Tasks> getAllTasks() {
+        ArrayList<Tasks> TList = new ArrayList<Tasks>();
+        String selectQuery = "SELECT * FROM " + TABLE_TASKS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                Tasks target = new Tasks();
+                target.setTitle(cursor.getString(0));
+                target.setDescription(cursor.getString(1));
+                target.setbColor(Integer.parseInt(cursor.getString(2)));
+                TList.add(target);
+            } while(cursor.moveToNext());
+        }
+        return TList;
+    }
+
+    public void clear() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_TASKS);
         db.close();
     }
 

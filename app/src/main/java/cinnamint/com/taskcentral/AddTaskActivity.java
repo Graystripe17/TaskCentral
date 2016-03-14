@@ -26,12 +26,14 @@ public class AddTaskActivity extends Activity {
         TaskCentral.mAdapter.notifyDataSetChanged();
 
         Intent backToMain = new Intent(this, TaskCentral.class);
-        backToMain.putExtra("SizeFromAddTask", TaskCentral.tasks.size());
+        // backToMain.putExtra("SizeFromAddTask", TaskCentral.tasks.size());
 
-//        backToMain.putExtra("TITLE", title.getText().toString());
-//        backToMain.putExtra("DESCRIPTION", desc.getText().toString());
-//        setResult(RESULT_OK, backToMain);
-//        finish();
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.addTask(newTask);
+        db.close();
+
+
+
         startActivity(backToMain);
     }
 
