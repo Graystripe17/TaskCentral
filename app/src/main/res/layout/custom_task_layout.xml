@@ -13,20 +13,23 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/ItemText" />
+        android:id="@+id/ItemText"
+        android:layout_margin="5dp" />
 
     <TextView
-        android:layout_width="225dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/DescriptionText"
         android:layout_gravity="center_horizontal"
-        android:autoText="false" />
+        android:autoText="false"
+        android:layout_margin="5dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New CheckBox"
+        android:text="DONE"
         android:id="@+id/Done"
-        android:layout_gravity="right" />
+        android:layout_gravity="right"
+        android:layout_margin="5dp" />
 </LinearLayout>

@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/android_plus"
+        android:background="@drawable/button_clicks"
         android:onClick="addNew"
         android:layout_margin="10dp"
         android:clickable="true" />
@@ -35,6 +35,7 @@
         android:onClick="delete"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/Central"
-        android:layout_alignEnd="@+id/Central" />
+        android:layout_alignEnd="@+id/Central"
+        android:visibility="gone" />
 
 </RelativeLayout>
