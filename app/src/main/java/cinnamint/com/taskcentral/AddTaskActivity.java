@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
@@ -44,7 +45,7 @@ public class AddTaskActivity extends Activity {
         // Add Notification
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.android_plus)
+                .setSmallIcon(R.drawable.stack_of_papers)
                 .setContentTitle(title.getText().toString())
                 .setContentText(desc.getText().toString());
 
@@ -52,7 +53,7 @@ public class AddTaskActivity extends Activity {
 
         Intent openApp = new Intent(this, TaskCentral.class);
         mBuilder.setContentIntent(build_notification_parent_stack(openApp));
-        mBuilder.setColor(250);
+        mBuilder.setColor(Color.GRAY);
 
 
         NotificationManager mNotificationManager =

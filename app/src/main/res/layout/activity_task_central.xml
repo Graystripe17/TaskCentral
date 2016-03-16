@@ -19,13 +19,13 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/New"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="@drawable/button_clicks"
         android:onClick="addNew"
-        android:layout_margin="10dp"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/Central"
+        android:layout_alignEnd="@+id/Central"
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:layout_width="wrap_content"
