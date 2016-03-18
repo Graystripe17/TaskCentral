@@ -32,7 +32,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
         View customView = myinf.inflate(R.layout.custom_task_layout, parent, false);
 
         Tasks singleTask = getItem(position);
-        CheckBox done = (CheckBox) customView.findViewById(R.id.Done);
+        final CheckBox done = (CheckBox) customView.findViewById(R.id.Done);
         TextView myItemText = (TextView) customView.findViewById(R.id.ItemText);
         TextView myDescText = (TextView) customView.findViewById(R.id.DescriptionText);
 
@@ -58,6 +58,8 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
 
                 parent.startAnimation(mFadeAnim);
 
+
+                done.setEnabled(false);
                 // Updates database after a the animation completes
                 parent.postDelayed(new Runnable() {
                     @Override
@@ -70,6 +72,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                         TaskCentral.mAdapter.notifyDataSetChanged();
                     }
                 }, mShortAnimationDuration);
+
 
 
             }

@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -15,10 +16,11 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class AddTaskActivity extends Activity {
 
-    private int unique_notification_id = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,10 @@ public class AddTaskActivity extends Activity {
     }
 
     public void submit_task_to_list(View v) {
+        SharedPreferences prefs = getSharedPreferences(Activity.class.getSimpleName(), Context.MODE_PRIVATE);
+        int unique_notification_id = prefs.getInt("notificationNumber", 0);
+
+
         EditText title = (EditText) findViewById(R.id.Title);
         EditText desc = (EditText) findViewById(R.id.DescriptionText);
         Tasks newTask = new Tasks(title.getText().toString(), desc.getText().toString());
@@ -56,9 +62,15 @@ public class AddTaskActivity extends Activity {
         mBuilder.setColor(Color.GRAY);
 
 
+
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(unique_notification_id++, mBuilder.build());
+        mNotificationManager.notify(unique_notification_id, mBuilder.build());
+
+        SharedPreferences.Editor editor = prefs.edit();
+        unique_notification_id++;
+        editor.putInt("notificationNumber", unique_notification_id);
+        editor.commit();
 
 
         startActivity(backToMain);
