@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class TaskCentral extends FragmentActivity {
 
-    static KittyAdapter mAdapter; // Could be listview adapter
+    static KittyAdapter mListAdapter; // Could be listview adapter
     static ArrayList<Tasks> tasks = new ArrayList<Tasks>();
     static ListView taskCentral;
     ViewPager mViewPager;
@@ -43,36 +43,18 @@ public class TaskCentral extends FragmentActivity {
 
     Context context;
 
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_central);
+        setContentView(R.layout.fragment_tri);
         context = this;
-
-        DatabaseHandler db = new DatabaseHandler(this);
-
 
 
         taskCentral = (ListView)findViewById(R.id.Central);
-        //if (mAdapter == null) {
-        // MUST BE CONSTANTLY RESET
-        mAdapter = new KittyAdapter(this, tasks);
-        //}
-        taskCentral.setAdapter(mAdapter);
+        mListAdapter = new KittyAdapter(this, tasks);
+        taskCentral.setAdapter(mListAdapter);
+        mListAdapter.notifyDataSetChanged();
 
-        mAdapter.notifyDataSetChanged();
-
-
-        taskCentral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(context, "REMOVE", Toast.LENGTH_LONG).show();
-                removeItem(position);
-            }
-        });
 
 
         // Setting the viewpager to TriFragPagerAdapter
@@ -135,7 +117,7 @@ public class TaskCentral extends FragmentActivity {
         DatabaseHandler db = new DatabaseHandler(context);
         db.clear();
         tasks.clear();
-        mAdapter.notifyDataSetChanged();
+        mListAdapter.notifyDataSetChanged();
     }
 
     @Override
