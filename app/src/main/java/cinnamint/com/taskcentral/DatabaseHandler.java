@@ -16,6 +16,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Tasks";
 
     private static final String TABLE_TASKS = "tasks";
+    private static final String TABLE_URGENT = "urgent";
+    private static final String TABLE_IMPORTANT = "important";
 
     private static final String KEY_TITLE = "Title";
     private static final String KEY_DESCRIPTION = "Description";
@@ -32,11 +34,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_DESCRIPTION + " STRING, "
                 + KEY_COLOR + " COLOR" + ")";
         db.execSQL(CREATE_TASKS_TABLE);
+
+        String CREATE_URGENT_TABLE = "CREATE TABLE " + TABLE_URGENT + "("
+                + KEY_TITLE + " STRING, "
+                + KEY_DESCRIPTION + " STRING, "
+                + KEY_COLOR + " COLOR" + ")";
+        db.execSQL(CREATE_URGENT_TABLE);
+
+        String CREATE_IMPORTANT_TABLE = "CREATE TABLE " + TABLE_IMPORTANT + "("
+                + KEY_TITLE + " STRING, "
+                + KEY_DESCRIPTION + " STRING, "
+                + KEY_COLOR + " COLOR" + ")";
+        db.execSQL(CREATE_URGENT_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_URGENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMPORTANT);
         onCreate(db);
     }
 
@@ -78,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void remove(String t) {
+    public void remove(String t, int frag_pos) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_TASKS + " WHERE Title = " + "'" + t + "'");
         db.close();

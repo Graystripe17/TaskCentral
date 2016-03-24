@@ -26,14 +26,16 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TaskCentral extends FragmentActivity {
 
-    static KittyAdapter mListAdapter; // Could be listview adapter
-    static ArrayList<Tasks> tasks = new ArrayList<Tasks>();
-    static ListView taskCentral;
-    ViewPager mViewPager;
+    static List<Tasks> tasks = new ArrayList<Tasks>();
+    static List<Tasks> urgent = new ArrayList<Tasks>();
+    static List<Tasks> important = new ArrayList<Tasks>();
+    static List<ArrayList<Tasks>> all_tasks;
+    static ViewPager mViewPager;
     PagerAdapter mPagerAdapter;
     final int REQUEST_CODE_ADD_TASK = 100;
     final String PREFS_NAME = "com.TaskCentral";
@@ -48,14 +50,6 @@ public class TaskCentral extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_tri);
         context = this;
-
-
-        taskCentral = (ListView)findViewById(R.id.Central);
-        mListAdapter = new KittyAdapter(this, tasks);
-        taskCentral.setAdapter(mListAdapter);
-        mListAdapter.notifyDataSetChanged();
-
-
 
         // Setting the viewpager to TriFragPagerAdapter
         mViewPager = (ViewPager) findViewById(R.id.ViewPager);
@@ -85,7 +79,6 @@ public class TaskCentral extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void addNew(View v) {
         Intent addTaskIntent = new Intent(this, AddTaskActivity.class);
         startActivityForResult(addTaskIntent, REQUEST_CODE_ADD_TASK);
@@ -105,20 +98,20 @@ public class TaskCentral extends FragmentActivity {
         super.onDestroy();
     }
 
-    public void delete (View v) {
-        v.setAlpha(1f);
-        v.setVisibility(View.VISIBLE);
-        v.animate()
-                .alpha(0f)
-                .setDuration(500)
-                .setListener(null);
-
-
-        DatabaseHandler db = new DatabaseHandler(context);
-        db.clear();
-        tasks.clear();
-        mListAdapter.notifyDataSetChanged();
-    }
+//    public void delete (View v) {
+//        v.setAlpha(1f);
+//        v.setVisibility(View.VISIBLE);
+//        v.animate()
+//                .alpha(0f)
+//                .setDuration(500)
+//                .setListener(null);
+//
+//
+//        DatabaseHandler db = new DatabaseHandler(context);
+//        db.clear();
+//        tasks.clear();
+//        mListAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {

@@ -20,8 +20,6 @@ import java.util.Random;
 
 public class AddTaskActivity extends Activity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +27,20 @@ public class AddTaskActivity extends Activity {
     }
 
     public void submit_task_to_list(View v) {
+        int pos;
+        pos = TaskCentral.mViewPager.getCurrentItem();
+
         SharedPreferences prefs = getSharedPreferences(Activity.class.getSimpleName(), Context.MODE_PRIVATE);
         int unique_notification_id = prefs.getInt("notificationNumber", 0);
-
 
         EditText title = (EditText) findViewById(R.id.Title);
         EditText desc = (EditText) findViewById(R.id.DescriptionText);
         Tasks newTask = new Tasks(title.getText().toString(), desc.getText().toString());
 
+
         //TODO: Check for null
         TaskCentral.tasks.add(newTask);
-        TaskCentral.mAdapter.notifyDataSetChanged();
+        TaskCentral.mListAdapter.notifyDataSetChanged();
 
         Intent backToMain = new Intent(this, TaskCentral.class);
         // backToMain.putExtra("SizeFromAddTask", TaskCentral.tasks.size());

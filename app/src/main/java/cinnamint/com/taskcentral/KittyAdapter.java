@@ -69,7 +69,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                         db.remove(TaskCentral.tasks.get(pos).getTitle());
                         db.close();
                         TaskCentral.tasks.remove(pos);
-                        TaskCentral.mAdapter.notifyDataSetChanged();
+                        TaskCentral.mListAdapter.notifyDataSetChanged();
                     }
                 }, mShortAnimationDuration);
 

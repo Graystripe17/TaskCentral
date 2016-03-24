@@ -11,18 +11,7 @@
         android:clickable="true"
         />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/New"
-        android:background="@drawable/button_clicks"
-        android:onClick="addNew"
-        android:clickable="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/Central"
-        android:layout_alignEnd="@+id/Central"
-        android:layout_marginBottom="20dp" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -39,6 +28,6 @@
         android:id="@+id/ViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:layout_gravity="left|top" />
 
 </FrameLayout>
