@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,11 +28,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class TaskCentral extends Activity {
+public class TaskCentral extends FragmentActivity {
 
     static KittyAdapter mAdapter; // Could be listview adapter
     static ArrayList<Tasks> tasks = new ArrayList<Tasks>();
     static ListView taskCentral;
+    ViewPager mViewPager;
+    PagerAdapter mPagerAdapter;
     final int REQUEST_CODE_ADD_TASK = 100;
     final String PREFS_NAME = "com.TaskCentral";
     SharedPreferences sharedPref;
@@ -44,40 +51,9 @@ public class TaskCentral extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_central);
         context = this;
-//        sharedPref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-//        editor = sharedPref.edit();
-//        int k = sharedPref.getInt("Read", 7);
-//        Toast.makeText(context, "K: " + k, Toast.LENGTH_LONG).show();
-
 
         DatabaseHandler db = new DatabaseHandler(this);
-//        for(int i = 0; i < tasks.size(); i++) {
-//            db.addTask(tasks.get(i));
-//        }
-        tasks = db.getAllTasks();
 
-        // Are we coming back from AddTaskActivity
-        if(getIntent() != null) {
-            // reload_size = getIntent().getIntExtra("SizeFromAddTask", -1);
-            // if(reload_size != -1) {
-                // We just came back from AddTaskActivity
-            // }
-        }
-        // Are we coming back from closing the app
-        else if(sharedPref != null) {
-            // If there is no previous preference, then the current task size will work
-            // reload_size = sharedPref.getInt("SIZE", tasks.size());
-        }
-        // Start constructing tasks
-//        tasks.clear();
-//        for(int i = 0; i < reload_size; i++) {
-//            Tasks builder = new Tasks();
-//            builder.setTitle(sharedPref.getString("Title_" + i, "Cant find " + i));
-//            builder.setDescription(sharedPref.getString("Description_" + i, "Cant find " + i));
-//            builder.setbColor(sharedPref.getInt("Color_" + i, 10));
-//            tasks.add(builder);
-//        }
-        // End constructing tasks
 
 
         taskCentral = (ListView)findViewById(R.id.Central);
@@ -89,29 +65,6 @@ public class TaskCentral extends Activity {
 
         mAdapter.notifyDataSetChanged();
 
-//        taskCentral.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        historicX = event.getX();
-//                        historicY = event.getY();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        if (event.getX() - historicX < -DELTA) {
-//                            Toast.makeText(context, "LEFT", Toast.LENGTH_LONG).show();
-//                            return true;
-//                        } else if (event.getY() - historicX > DELTA) {
-//                            Toast.makeText(context, "RIGHT", Toast.LENGTH_SHORT).show();
-//                            return true;
-//                        }
-//                        break;
-//                    default:
-//                        return false;
-//                }
-//                return false;
-//            }
-//        });
 
         taskCentral.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -121,19 +74,11 @@ public class TaskCentral extends Activity {
             }
         });
 
-//        for(int i = 0; i < taskCentral.getCount(); i++) {
-//            final int place = i;
-//            ((CheckBox) (taskCentral.getChildAt(i).findViewById(R.id.Done))).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                @Override
-//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    TaskCentral.tasks.remove(place);
-//                    Tasks[] TaskArr = new Tasks[TaskCentral.tasks.size()];
-//                    TaskArr = TaskCentral.tasks.toArray(TaskArr);
-//                    TaskCentral.tasks.add(new Tasks("DFSION", "ASKLD"));
-//                    TaskCentral.mAdapter.notifyDataSetChanged();
-//                }
-//            });
-//        }
+
+        // Setting the viewpager to TriFragPagerAdapter
+        mViewPager = (ViewPager) findViewById(R.id.ViewPager);
+        mPagerAdapter = new TriFragPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mPagerAdapter);
     }
 
     @Override
@@ -170,42 +115,11 @@ public class TaskCentral extends Activity {
 
     @Override
     protected void onPause() {
-//        editor.putInt("Read", 3);
-//        editor.commit();
-//        if(sharedPref != null) {
-//            // Get rid of Bloating
-//            // editor.clear();
-//
-//            editor.putInt("SIZE", tasks.size());
-//            for(int i = 0; i < tasks.size(); i++) {
-//                Tasks target = tasks.get(i);
-//                editor.putString("Title_"+i, target.getTitle());
-//                editor.putString("Description_" + i, target.getDescription());
-//                editor.putInt("Color_" + i, target.getbColor());
-//                Toast.makeText(context, "Title: "+target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
-//            }
-//        }
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-//        editor.putInt("Read", 5);
-//        editor.commit();
-//        if(sharedPref != null) {
-//            // Get rid of Bloating
-//            //editor.clear();
-//
-//            editor.putInt("SIZE", tasks.size());
-//            for(int i = 0; i < tasks.size(); i++) {
-//                Tasks target = tasks.get(i);
-//                editor.putString("Title_"+i, target.getTitle());
-//                editor.putString("Description_" + i, target.getDescription());
-//                editor.putInt("Color_" + i, target.getbColor());
-//                Toast.makeText(context, "destroy; Title: " + target.getTitle() + "   Size: " + tasks.size(), Toast.LENGTH_SHORT).show();
-//            }
-//            editor.commit();
-//        }
         super.onDestroy();
     }
 
@@ -227,7 +141,5 @@ public class TaskCentral extends Activity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-//        editor.putInt("SIZE", tasks.size());
-//        editor.commit();
     }
 }
