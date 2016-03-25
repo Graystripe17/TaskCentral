@@ -1,30 +1,17 @@
 package cinnamint.com.taskcentral;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +21,6 @@ public class TaskCentral extends FragmentActivity {
     static List<Tasks> tasks = new ArrayList<Tasks>();
     static List<Tasks> urgent = new ArrayList<Tasks>();
     static List<Tasks> important = new ArrayList<Tasks>();
-    static List<ArrayList<Tasks>> all_tasks;
     static ViewPager mViewPager;
     PagerAdapter mPagerAdapter;
     final int REQUEST_CODE_ADD_TASK = 100;

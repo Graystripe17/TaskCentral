@@ -27,8 +27,7 @@ public class AddTaskActivity extends Activity {
     }
 
     public void submit_task_to_list(View v) {
-        int pos;
-        pos = TaskCentral.mViewPager.getCurrentItem();
+        int slide_position = TaskCentral.mViewPager.getCurrentItem();
 
         SharedPreferences prefs = getSharedPreferences(Activity.class.getSimpleName(), Context.MODE_PRIVATE);
         int unique_notification_id = prefs.getInt("notificationNumber", 0);
@@ -38,16 +37,32 @@ public class AddTaskActivity extends Activity {
         Tasks newTask = new Tasks(title.getText().toString(), desc.getText().toString());
 
 
-        //TODO: Check for null
-        TaskCentral.tasks.add(newTask);
-        TaskCentral.mListAdapter.notifyDataSetChanged();
+        // Warning: Check if mListAdapter static
+        switch(slide_position) {
+            case 0:
+                TaskCentral.urgent.add(newTask);
+                break;
+            case 1:
+                TaskCentral.important.add(newTask);
+                break;
+            case 2:
+                TaskCentral.tasks.add(newTask);
+                break;
+        }
+
+        // Note: after going back to Task Central it will instantiate the ListView adapter
+        // again which will reset the ListView. Kind of hacky.
+        // notifyDataSetChanged();
+
+
 
         Intent backToMain = new Intent(this, TaskCentral.class);
-        // backToMain.putExtra("SizeFromAddTask", TaskCentral.tasks.size());
 
         DatabaseHandler db = new DatabaseHandler(this);
-        db.addTask(newTask);
+        db.addTask(newTask, slide_position);
         db.close();
+
+
 
         // Add Notification
         NotificationCompat.Builder mBuilder =
@@ -56,13 +71,9 @@ public class AddTaskActivity extends Activity {
                 .setContentTitle(title.getText().toString())
                 .setContentText(desc.getText().toString());
 
-
-
         Intent openApp = new Intent(this, TaskCentral.class);
         mBuilder.setContentIntent(build_notification_parent_stack(openApp));
         mBuilder.setColor(Color.GRAY);
-
-
 
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -29,7 +29,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/button"
-        android:background="@drawable/android_red_check"
+        android:background="@drawable/check_clicks"
         android:elegantTextHeight="false"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/DescriptionText"

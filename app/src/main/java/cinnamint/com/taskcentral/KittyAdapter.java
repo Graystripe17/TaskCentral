@@ -15,18 +15,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KittyAdapter extends ArrayAdapter<Tasks> {
 
     private int mShortAnimationDuration = 500;
 
-    public KittyAdapter(Context context, ArrayList<Tasks> items) {
+    public KittyAdapter(Context context, List<Tasks> items) {
         super(context, R.layout.custom_task_layout, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
+        final KittyAdapter final_copy_of_this = this;
 
         LayoutInflater myinf = LayoutInflater.from(getContext());
         View customView = myinf.inflate(R.layout.custom_task_layout, parent, false);
@@ -64,15 +66,30 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                 parent.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        int slidenumber = TaskCentral.mViewPager.getCurrentItem();
+                        List<Tasks> currentList;
+                        switch (slidenumber) {
+                            case 0:
+                                currentList = TaskCentral.tasks;
+                                break;
+                            case 1:
+                                currentList = TaskCentral.important;
+                                break;
+                            case 2:
+                                currentList = TaskCentral.urgent;
+                                break;
+                            default:
+                                currentList = TaskCentral.tasks;
+                                break;
+                        }
                         // YOU MUST UPDATE THE DATABASE, removed by Title
                         DatabaseHandler db = new DatabaseHandler(getContext());
-                        db.remove(TaskCentral.tasks.get(pos).getTitle());
+                        db.remove(currentList.get(pos).getTitle(), slidenumber);
                         db.close();
-                        TaskCentral.tasks.remove(pos);
-                        TaskCentral.mListAdapter.notifyDataSetChanged();
+                        currentList.remove(pos);
+                        final_copy_of_this.notifyDataSetChanged();
                     }
                 }, mShortAnimationDuration);
-
 
 
             }

@@ -9,20 +9,18 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/ViewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    />
+        android:layout_height="match_parent" />
+
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/New"
-        android:background="@drawable/button_clicks"
-        android:onClick="addNew"
-        android:clickable="true"
-        android:layout_gravity="end"
-        android:layout_alignBottom="@+id/ViewPager"
-        android:layout_alignRight="@+id/ViewPager"
-        android:layout_alignEnd="@+id/ViewPager" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/Clear"
+        android:onClick="delete"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/Central"
+        android:layout_alignEnd="@+id/Central"
+        android:visibility="gone" />
 
 </RelativeLayout>

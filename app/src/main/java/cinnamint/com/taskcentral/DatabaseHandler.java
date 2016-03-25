@@ -29,23 +29,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
-                + KEY_TITLE + " STRING, "
-                + KEY_DESCRIPTION + " STRING, "
-                + KEY_COLOR + " COLOR" + ")";
-        db.execSQL(CREATE_TASKS_TABLE);
-
         String CREATE_URGENT_TABLE = "CREATE TABLE " + TABLE_URGENT + "("
                 + KEY_TITLE + " STRING, "
                 + KEY_DESCRIPTION + " STRING, "
                 + KEY_COLOR + " COLOR" + ")";
-        db.execSQL(CREATE_URGENT_TABLE);
+        try {
+            db.execSQL(CREATE_URGENT_TABLE);
+        } catch(Exception e) {
+            Log.e("WRONG", e.toString());
+        }
+
+        String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
+                + KEY_TITLE + " STRING, "
+                + KEY_DESCRIPTION + " STRING, "
+                + KEY_COLOR + " COLOR" + ")";
+        try {
+            db.execSQL(CREATE_TASKS_TABLE);
+        } catch(Exception e) {
+            Log.e("WRONG", e.toString());
+        }
+
 
         String CREATE_IMPORTANT_TABLE = "CREATE TABLE " + TABLE_IMPORTANT + "("
                 + KEY_TITLE + " STRING, "
                 + KEY_DESCRIPTION + " STRING, "
                 + KEY_COLOR + " COLOR" + ")";
-        db.execSQL(CREATE_URGENT_TABLE);
+        try {
+            db.execSQL(CREATE_IMPORTANT_TABLE);
+        } catch(Exception e) {
+            Log.e("WRONG", e.toString());
+        }
     }
 
     @Override
@@ -56,16 +69,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addTask(Tasks task) {
+    public void addTask(Tasks task, int slide_position) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, task.getTitle());
         values.put(KEY_DESCRIPTION, task.getDescription());
         values.put(KEY_COLOR, task.getbColor());
 
-        if (db.insert(TABLE_TASKS, null, values) == -1) {
+        String TARGET_TABLE;
+        switch(slide_position) {
+            case 0:
+                TARGET_TABLE = TABLE_URGENT;
+                break;
+            case 1:
+                TARGET_TABLE = TABLE_IMPORTANT;
+                break;
+            case 2:
+                TARGET_TABLE = TABLE_TASKS;
+                break;
+            default:
+                TARGET_TABLE = TABLE_TASKS;
+                break;
+        }
+
+        if (db.insert(TARGET_TABLE, null, values) == -1) {
             Log.d("WRONG", "BAD");
-        };
+        }
+
+        String insString = "INSERT INTO " +
+                            TABLE_URGENT + " (Title, Description, Color)" +
+                            " VALUES ('MYTITLE', 'mydesc', '231')";
+        db.execSQL(insString);
+
+
         db.close();
     }
 
@@ -95,6 +131,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void remove(String t, int frag_pos) {
+        //TODO: REWRITE THIS FOR ALL TABLES
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_TASKS + " WHERE Title = " + "'" + t + "'");
         db.close();
