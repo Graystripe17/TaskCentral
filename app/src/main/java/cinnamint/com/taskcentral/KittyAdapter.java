@@ -19,10 +19,13 @@ import java.util.List;
 
 public class KittyAdapter extends ArrayAdapter<Tasks> {
 
+    int fp;
+
     private int mShortAnimationDuration = 500;
 
-    public KittyAdapter(Context context, List<Tasks> items) {
+    public KittyAdapter(Context context, List<Tasks> items, int Fragment_Position) {
         super(context, R.layout.custom_task_layout, items);
+        fp = Fragment_Position;
     }
 
     @Override
@@ -66,17 +69,16 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                 parent.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        int slidenumber = TaskCentral.absolute_screen_position;
                         List<Tasks> currentList;
-                        switch (slidenumber) {
+                        switch (fp) {
                             case 0:
-                                currentList = TaskCentral.tasks;
+                                currentList = TaskCentral.urgent;
                                 break;
                             case 1:
                                 currentList = TaskCentral.important;
                                 break;
                             case 2:
-                                currentList = TaskCentral.urgent;
+                                currentList = TaskCentral.tasks;
                                 break;
                             default:
                                 currentList = TaskCentral.tasks;
@@ -85,7 +87,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
 
                         // YOU MUST UPDATE THE DATABASE, removed by Title
                         DatabaseHandler db = new DatabaseHandler(getContext());
-                        db.remove(currentList.get(pos).getTitle(), slidenumber);
+                        db.remove(currentList.get(pos).getTitle(), fp);
                         db.close();
                         currentList.remove(pos);
                         final_copy_of_this.notifyDataSetChanged();

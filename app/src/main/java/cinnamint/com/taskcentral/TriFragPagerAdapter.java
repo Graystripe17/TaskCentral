@@ -22,22 +22,7 @@ public class TriFragPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment mTriFragment;
-        switch(position) {
-//            case 0:
-//                mTriFragment = new TriFragment();
-//                break;
-//            case 1:
-//                mTriFragment = new TriFragment();
-//                break;
-//            case 2:
-//                mTriFragment = new TriFragment();
-//                break;
-            default:
-                mTriFragment = new TriFragment();
-                break;
-        }
-        return mTriFragment;
+        return new TriFragment(position);
     }
 
 

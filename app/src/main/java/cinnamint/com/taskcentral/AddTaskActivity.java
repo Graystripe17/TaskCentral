@@ -20,11 +20,15 @@ import java.util.Random;
 
 public class AddTaskActivity extends Activity {
 
+    int fragment_position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
+
+        Intent intent = getIntent();
+        fragment_position = intent.getIntExtra("Fragment_Position", 200);
 
     }
 
@@ -39,7 +43,7 @@ public class AddTaskActivity extends Activity {
 
 
         // Warning: Check if mListAdapter static
-        switch(TaskCentral.absolute_screen_position) {
+        switch(fragment_position) {
             case 0:
                 TaskCentral.urgent.add(newTask);
                 break;
@@ -60,7 +64,7 @@ public class AddTaskActivity extends Activity {
         Intent backToMain = new Intent(this, TaskCentral.class);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        db.addTask(newTask);
+        db.addTask(newTask, fragment_position);
         db.close();
 
 

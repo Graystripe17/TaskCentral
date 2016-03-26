@@ -1,6 +1,7 @@
 package cinnamint.com.taskcentral;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,16 +22,17 @@ public class TriFragment extends Fragment {
     // Could be listview adapter
     KittyAdapter mListAdapter;
     ListView taskCentral;
+    int Fragment_Position;
 
-    public static TriFragment newInstance(String param1, String param2) {
-        TriFragment fragment = new TriFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public static TriFragment newInstance(String param1, String param2) {
+//        TriFragment fragment = new TriFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
-    public TriFragment() {
-
+    public TriFragment(int position) {
+        Fragment_Position = position;
     }
 
     public KittyAdapter getListAdapter() {
@@ -47,10 +49,10 @@ public class TriFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tri, container, false);
 
-        // Must be grabbed on view and passed to other activities
-        final int pos = TaskCentral.absolute_screen_position;
+        final int finalFragment_Position = Fragment_Position;
+
         List<Tasks> targetList;
-        switch(pos) {
+        switch(finalFragment_Position) {
             case 0:
                 targetList = TaskCentral.urgent;
                 break;
@@ -69,7 +71,7 @@ public class TriFragment extends Fragment {
         // getActivity returns FragmentActivity (extends) Activity (extends) Context
         // getActivity returns null if called before onAttach
         // onAttach->onCreate->onCreateView
-        mListAdapter = new KittyAdapter(getActivity(), targetList);
+        mListAdapter = new KittyAdapter(getActivity(), targetList, finalFragment_Position);
         taskCentral.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
 
@@ -78,6 +80,7 @@ public class TriFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent addTaskIntent = new Intent(getActivity(), AddTaskActivity.class);
+                addTaskIntent.putExtra("Fragment_Position", finalFragment_Position);
                 startActivity(addTaskIntent);
             }
         });

@@ -44,20 +44,12 @@ public class TaskCentral extends FragmentActivity {
         mPagerAdapter = new TriFragPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 // This method will be invoked when a new page becomes selected. Animation is not necessarily complete.
                 absolute_screen_position = position;
                 Toast.makeText(context, Integer.toString(position), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
             }
         });
     }

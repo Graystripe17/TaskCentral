@@ -69,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addTask(Tasks task) {
+    public void addTask(Tasks task, int fragment_position) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, task.getTitle());
@@ -77,7 +77,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_COLOR, task.getbColor());
 
         String TARGET_TABLE;
-        switch(TaskCentral.absolute_screen_position) {
+        switch(fragment_position) {
             case 0:
                 TARGET_TABLE = TABLE_URGENT;
                 break;
