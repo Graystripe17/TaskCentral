@@ -22,25 +22,44 @@ public class TaskCentral extends FragmentActivity {
     static List<Tasks> urgent = new ArrayList<Tasks>();
     static List<Tasks> important = new ArrayList<Tasks>();
     static ViewPager mViewPager;
+    static int absolute_screen_position = 0;
     PagerAdapter mPagerAdapter;
-    final int REQUEST_CODE_ADD_TASK = 100;
     final String PREFS_NAME = "com.TaskCentral";
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     int reload_size;
+    int REQUEST_CODE_ADD_TASK = 100;
+
 
     Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_tri);
+        setContentView(R.layout.activity_task_central);
         context = this;
 
         // Setting the viewpager to TriFragPagerAdapter
-        mViewPager = (ViewPager) findViewById(R.id.ViewPager);
+        mViewPager = (ViewPager) findViewById(R.id.godie);
         mPagerAdapter = new TriFragPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // This method will be invoked when a new page becomes selected. Animation is not necessarily complete.
+                absolute_screen_position = position;
+                Toast.makeText(context, Integer.toString(position), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @Override
@@ -65,10 +84,7 @@ public class TaskCentral extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addNew(View v) {
-        Intent addTaskIntent = new Intent(this, AddTaskActivity.class);
-        startActivityForResult(addTaskIntent, REQUEST_CODE_ADD_TASK);
-    }
+
 
     public void removeItem(int pos) {
         Toast.makeText(context, "YOYOYOYOYO", Toast.LENGTH_LONG).show();
@@ -98,6 +114,12 @@ public class TaskCentral extends FragmentActivity {
 //        tasks.clear();
 //        mListAdapter.notifyDataSetChanged();
 //    }
+
+    public void addNew(View v) {
+        Intent addTaskIntent = new Intent(this, AddTaskActivity.class);
+        startActivityForResult(addTaskIntent, REQUEST_CODE_ADD_TASK);
+    }
+
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {

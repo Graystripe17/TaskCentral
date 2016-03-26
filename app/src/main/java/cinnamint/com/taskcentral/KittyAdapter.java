@@ -66,7 +66,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                 parent.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        int slidenumber = TaskCentral.mViewPager.getCurrentItem();
+                        int slidenumber = TaskCentral.absolute_screen_position;
                         List<Tasks> currentList;
                         switch (slidenumber) {
                             case 0:
@@ -82,6 +82,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
                                 currentList = TaskCentral.tasks;
                                 break;
                         }
+
                         // YOU MUST UPDATE THE DATABASE, removed by Title
                         DatabaseHandler db = new DatabaseHandler(getContext());
                         db.remove(currentList.get(pos).getTitle(), slidenumber);

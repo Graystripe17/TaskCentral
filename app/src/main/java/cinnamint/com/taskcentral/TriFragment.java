@@ -10,10 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,7 +47,8 @@ public class TriFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tri, container, false);
 
-        int pos = TaskCentral.mViewPager.getCurrentItem();
+        // Must be grabbed on view and passed to other activities
+        final int pos = TaskCentral.absolute_screen_position;
         List<Tasks> targetList;
         switch(pos) {
             case 0:
@@ -73,11 +73,18 @@ public class TriFragment extends Fragment {
         taskCentral.setAdapter(mListAdapter);
         mListAdapter.notifyDataSetChanged();
 
+        Button check = (Button)rootView.findViewById(R.id.Add);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addTaskIntent = new Intent(getActivity(), AddTaskActivity.class);
+                startActivity(addTaskIntent);
+            }
+        });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tri, container, false);
+        return rootView;
     }
-
 
 
 

@@ -3,30 +3,29 @@
     android:layout_height="match_parent" tools:context="cinnamint.com.taskcentral.TriFragment">
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/Central"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:clickable="true"
-        />
+        android:layout_margin="20dip" />
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/ViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="left|top" />
+    <!--<android.support.v4.view.ViewPager-->
+        <!--android:id="@+id/FragmentViewPager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="left|top" />-->
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
+        android:layout_width="66dp"
         android:layout_height="80dp"
         android:id="@+id/Add"
         android:background="@drawable/button_clicks"
-        android:onClick="addNew"
         android:clickable="true"
-        android:layout_gravity="center"
+        android:layout_gravity="right|bottom"
         android:layout_alignBottom="@+id/ViewPager"
         android:layout_alignRight="@+id/ViewPager"
         android:layout_alignEnd="@+id/ViewPager" />

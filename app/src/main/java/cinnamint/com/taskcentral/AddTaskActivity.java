@@ -20,14 +20,15 @@ import java.util.Random;
 
 public class AddTaskActivity extends Activity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_task);
+
     }
 
     public void submit_task_to_list(View v) {
-        int slide_position = TaskCentral.mViewPager.getCurrentItem();
 
         SharedPreferences prefs = getSharedPreferences(Activity.class.getSimpleName(), Context.MODE_PRIVATE);
         int unique_notification_id = prefs.getInt("notificationNumber", 0);
@@ -38,7 +39,7 @@ public class AddTaskActivity extends Activity {
 
 
         // Warning: Check if mListAdapter static
-        switch(slide_position) {
+        switch(TaskCentral.absolute_screen_position) {
             case 0:
                 TaskCentral.urgent.add(newTask);
                 break;
@@ -59,7 +60,7 @@ public class AddTaskActivity extends Activity {
         Intent backToMain = new Intent(this, TaskCentral.class);
 
         DatabaseHandler db = new DatabaseHandler(this);
-        db.addTask(newTask, slide_position);
+        db.addTask(newTask);
         db.close();
 
 

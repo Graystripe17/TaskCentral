@@ -39,16 +39,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.e("WRONG", e.toString());
         }
 
-        String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
-                + KEY_TITLE + " STRING, "
-                + KEY_DESCRIPTION + " STRING, "
-                + KEY_COLOR + " COLOR" + ")";
-        try {
-            db.execSQL(CREATE_TASKS_TABLE);
-        } catch(Exception e) {
-            Log.e("WRONG", e.toString());
-        }
-
 
         String CREATE_IMPORTANT_TABLE = "CREATE TABLE " + TABLE_IMPORTANT + "("
                 + KEY_TITLE + " STRING, "
@@ -56,6 +46,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_COLOR + " COLOR" + ")";
         try {
             db.execSQL(CREATE_IMPORTANT_TABLE);
+        } catch(Exception e) {
+            Log.e("WRONG", e.toString());
+        }
+
+        String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS + "("
+        + KEY_TITLE + " STRING, "
+        + KEY_DESCRIPTION + " STRING, "
+        + KEY_COLOR + " COLOR" + ")";
+        try {
+            db.execSQL(CREATE_TASKS_TABLE);
         } catch(Exception e) {
             Log.e("WRONG", e.toString());
         }
@@ -69,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addTask(Tasks task, int slide_position) {
+    public void addTask(Tasks task) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, task.getTitle());
@@ -77,7 +77,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_COLOR, task.getbColor());
 
         String TARGET_TABLE;
-        switch(slide_position) {
+        switch(TaskCentral.absolute_screen_position) {
             case 0:
                 TARGET_TABLE = TABLE_URGENT;
                 break;
@@ -133,7 +133,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void remove(String t, int frag_pos) {
         //TODO: REWRITE THIS FOR ALL TABLES
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_TASKS + " WHERE Title = " + "'" + t + "'");
+
+        String target_table;
+        switch(frag_pos) {
+            case 0:
+                target_table = TABLE_URGENT;
+                break;
+            case 1:
+                target_table = TABLE_IMPORTANT;
+                break;
+            case 2:
+                target_table = TABLE_TASKS;
+                break;
+            default:
+                target_table = TABLE_TASKS;
+        }
+
+        String delete_sql = "DELETE FROM " + target_table + " WHERE Title = " + "'" + t + "'";
+        db.execSQL(delete_sql);
         db.close();
     }
 

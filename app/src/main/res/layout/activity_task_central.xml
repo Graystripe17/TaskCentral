@@ -7,9 +7,13 @@
 
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/ViewPager"
+        android:id="@+id/godie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="#ff778899" />
 
 
     <Button

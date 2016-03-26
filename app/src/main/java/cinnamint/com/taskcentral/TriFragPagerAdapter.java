@@ -13,6 +13,8 @@ public class TriFragPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+
+
     @Override
     public int getCount() {
         return 3;
