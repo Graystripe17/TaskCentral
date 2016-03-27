@@ -96,18 +96,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.d("WRONG", "BAD");
         }
 
-        String insString = "INSERT INTO " +
-                            TABLE_URGENT + " (Title, Description, Color)" +
-                            " VALUES ('MYTITLE', 'mydesc', '231')";
-        db.execSQL(insString);
+//        String insString = "INSERT INTO " +
+//                            TABLE_URGENT + " (Title, Description, Color)" +
+//                            " VALUES ('MYTITLE', 'mydesc', '231')";
+//        db.execSQL(insString);
 
 
         db.close();
     }
 
-    public ArrayList<Tasks> getAllTasks() {
+    public ArrayList<Tasks> getAllTasks(int position) {
         ArrayList<Tasks> TList = new ArrayList<Tasks>();
-        String selectQuery = "SELECT * FROM " + TABLE_TASKS;
+        String target_table;
+        switch(position) {
+            case 0:
+                target_table = TABLE_URGENT;
+                break;
+            case 1:
+                target_table = TABLE_IMPORTANT;
+                break;
+            case 2:
+                target_table = TABLE_TASKS;
+                break;
+            default:
+                target_table = TABLE_TASKS;
+                break;
+        }
+
+        String selectQuery = "SELECT * FROM " + target_table;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

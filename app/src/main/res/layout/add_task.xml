@@ -34,7 +34,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/DescriptionText"
         android:layout_alignEnd="@+id/DescriptionText"
-        android:layout_margin="10dp"
+        android:layout_margin="20dip"
         android:onClick="submit_task_to_list"
         android:clickable="true" />
 </RelativeLayout>

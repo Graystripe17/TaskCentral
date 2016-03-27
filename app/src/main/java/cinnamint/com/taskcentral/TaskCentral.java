@@ -39,6 +39,15 @@ public class TaskCentral extends FragmentActivity {
         setContentView(R.layout.activity_task_central);
         context = this;
 
+        int resume_position = 0;
+        Intent backToMain = getIntent();
+        if(backToMain != null) {
+            resume_position = backToMain.getIntExtra("fragment_position", 0);
+        }
+
+
+
+
         // Setting the viewpager to TriFragPagerAdapter
         mViewPager = (ViewPager) findViewById(R.id.godie);
         mPagerAdapter = new TriFragPagerAdapter(getSupportFragmentManager());
@@ -52,6 +61,15 @@ public class TaskCentral extends FragmentActivity {
                 Toast.makeText(context, Integer.toString(position), Toast.LENGTH_LONG).show();
             }
         });
+
+        DatabaseHandler dbh = new DatabaseHandler(context);
+        urgent = dbh.getAllTasks(0);
+        important = dbh.getAllTasks(1);
+        tasks = dbh.getAllTasks(2);
+
+
+        mViewPager.setCurrentItem(resume_position, false);
+
     }
 
     @Override

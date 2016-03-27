@@ -21,7 +21,7 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
 
     int fp;
 
-    private int mShortAnimationDuration = 500;
+    private int mShortAnimationDuration = 2000;
 
     public KittyAdapter(Context context, List<Tasks> items, int Fragment_Position) {
         super(context, R.layout.custom_task_layout, items);

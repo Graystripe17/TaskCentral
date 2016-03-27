@@ -62,6 +62,7 @@ public class AddTaskActivity extends Activity {
 
 
         Intent backToMain = new Intent(this, TaskCentral.class);
+        backToMain.putExtra("fragment_position", fragment_position);
 
         DatabaseHandler db = new DatabaseHandler(this);
         db.addTask(newTask, fragment_position);

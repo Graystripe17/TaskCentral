@@ -20,7 +20,7 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="66dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/Add"
         android:background="@drawable/button_clicks"
@@ -28,6 +28,7 @@
         android:layout_gravity="right|bottom"
         android:layout_alignBottom="@+id/ViewPager"
         android:layout_alignRight="@+id/ViewPager"
-        android:layout_alignEnd="@+id/ViewPager" />
+        android:layout_alignEnd="@+id/ViewPager"
+        android:layout_margin="20dip" />
 
 </FrameLayout>

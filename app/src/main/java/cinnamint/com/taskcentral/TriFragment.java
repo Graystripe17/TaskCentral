@@ -31,9 +31,9 @@ public class TriFragment extends Fragment {
 //        return fragment;
 //    }
 
-    public TriFragment(int position) {
-        Fragment_Position = position;
+    public TriFragment() {
     }
+
 
     public KittyAdapter getListAdapter() {
         return mListAdapter;
@@ -42,6 +42,7 @@ public class TriFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fragment_Position = getArguments().getInt("position");
     }
 
     @Override
