@@ -43,7 +43,8 @@ public class KittyAdapter extends ArrayAdapter<Tasks> {
 
         myItemText.setText(singleTask.getTitle());
         myDescText.setText(singleTask.getDescription());
-        customView.setBackgroundColor(singleTask.getbColor());
+        int rnd = (int) (3 * Math.random());
+        // customView.setBackgroundColor(singleTask.getbColor());
 
 
         done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
