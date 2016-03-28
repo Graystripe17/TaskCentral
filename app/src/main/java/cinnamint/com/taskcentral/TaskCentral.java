@@ -58,7 +58,7 @@ public class TaskCentral extends FragmentActivity {
             public void onPageSelected(int position) {
                 // This method will be invoked when a new page becomes selected. Animation is not necessarily complete.
                 absolute_screen_position = position;
-                Toast.makeText(context, Integer.toString(position), Toast.LENGTH_LONG).show();
+                // Toast.makeText(context, Integer.toString(position), Toast.LENGTH_LONG).show();
             }
         });
 
