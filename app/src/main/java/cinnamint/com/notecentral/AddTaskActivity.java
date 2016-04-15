@@ -1,4 +1,4 @@
-package cinnamint.com.taskcentral;
+package cinnamint.com.notecentral;
 
 
 import android.annotation.TargetApi;
@@ -14,9 +14,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.widget.EditText;
-
-import java.util.Objects;
-import java.util.Random;
 
 public class AddTaskActivity extends Activity {
 
@@ -63,6 +60,7 @@ public class AddTaskActivity extends Activity {
 
         Intent backToMain = new Intent(this, TaskCentral.class);
         backToMain.putExtra("fragment_position", fragment_position);
+        backToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         DatabaseHandler db = new DatabaseHandler(this);
         db.addTask(newTask, fragment_position);

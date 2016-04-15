@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="cinnamint.com.taskcentral.TriFragment">
+    android:layout_height="match_parent" tools:context="cinnamint.com.notecentral.TriFragment">
 
     <ListView
         android:layout_width="match_parent"
@@ -10,15 +10,9 @@
         android:layout_alignParentStart="true"
         android:clickable="true"
         android:layout_margin="10dip"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:divider="@drawable/list_view_divider"
+        android:dividerHeight="1px"/>
 
-
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/FragmentViewPager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_gravity="left|top" />-->
 
     <Button
         style="?android:attr/buttonStyleSmall"

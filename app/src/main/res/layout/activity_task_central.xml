@@ -7,13 +7,13 @@
     android:padding="0dp">
 
 
-
+    <!--#ff778899-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/godie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ff778899"
+        android:background="#2c3e50"
         android:layout_alignTop="@+id/Clear"
         android:layout_alignLeft="@+id/Clear"
         android:layout_alignStart="@+id/Clear"

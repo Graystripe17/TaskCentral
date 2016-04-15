@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cinnamint.com.taskcentral" >
+    package="cinnamint.com.notecentral" >
 
     <application
         android:allowBackup="true"
@@ -8,15 +8,19 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".TaskCentral"
+            android:name="cinnamint.com.notecentral.TaskCentral"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddTaskActivity"/>
+        <activity
+            android:name="cinnamint.com.notecentral.AddTaskActivity" >
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                </intent-filter>
+        </activity>
 
     </application>
 

@@ -1,4 +1,4 @@
-package cinnamint.com.taskcentral;
+package cinnamint.com.notecentral;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,9 +44,6 @@ public class TaskCentral extends FragmentActivity {
         if(backToMain != null) {
             resume_position = backToMain.getIntExtra("fragment_position", 0);
         }
-
-
-
 
         // Setting the viewpager to TriFragPagerAdapter
         mViewPager = (ViewPager) findViewById(R.id.godie);

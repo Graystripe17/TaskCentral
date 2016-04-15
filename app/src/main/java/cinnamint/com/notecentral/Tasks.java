@@ -1,4 +1,4 @@
-package cinnamint.com.taskcentral;
+package cinnamint.com.notecentral;
 
 import android.graphics.Color;
 
